@@ -62,7 +62,7 @@ class Signature
         $result = '';
 
         foreach ($array as $item) {
-            $result .= (is_array($item) ? self::implodeRecursive($separator, $item) : self::stringify($item)).$separator;
+            $result .= (is_array($item) ? self::implodeRecursive($separator, $item) : self::stringify($item)) . $separator;
         }
 
         return substr($result, 0, -1);

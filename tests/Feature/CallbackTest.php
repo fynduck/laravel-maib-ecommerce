@@ -14,7 +14,7 @@ function signedPayload(array $result): array
     return ['result' => $result, 'signature' => Signature::compute($result, KEY)];
 }
 
-it('accepts a valid signature and dispatches events', function () {
+it('accepts a valid signature and dispatches events', function (): void {
     Event::fake();
 
     $payload = signedPayload(['payId' => 'PID', 'orderId' => '123', 'status' => 'OK', 'amount' => '10.25']);
@@ -23,23 +23,23 @@ it('accepts a valid signature and dispatches events', function () {
         ->assertOk()
         ->assertJson(['ok' => true]);
 
-    Event::assertDispatched(PaymentCallbackReceived::class, fn ($e) => $e->callback->payId() === 'PID');
+    Event::assertDispatched(PaymentCallbackReceived::class, static fn ($e) => $e->callback->payId() === 'PID');
     Event::assertDispatched(PaymentSucceeded::class);
     Event::assertNotDispatched(PaymentFailed::class);
 });
 
-it('rejects an invalid signature with 403', function () {
+it('rejects an invalid signature with 403', function (): void {
     Event::fake();
 
     $this->postJson(route('maib.callback'), [
-        'result' => ['payId' => 'PID', 'status' => 'OK'],
+        'result'    => ['payId' => 'PID', 'status' => 'OK'],
         'signature' => 'tampered',
     ])->assertForbidden();
 
     Event::assertNotDispatched(PaymentCallbackReceived::class);
 });
 
-it('dispatches PaymentFailed for a failed status', function () {
+it('dispatches PaymentFailed for a failed status', function (): void {
     Event::fake();
 
     $this->postJson(route('maib.callback'), signedPayload(['payId' => 'PID', 'status' => 'FAILED']))
@@ -49,11 +49,11 @@ it('dispatches PaymentFailed for a failed status', function () {
     Event::assertNotDispatched(PaymentSucceeded::class);
 });
 
-it('persists the payment when store_payments is enabled', function () {
+it('persists the payment when store_payments is enabled', function (): void {
     config()->set('maib.store_payments', true);
 
     $payload = signedPayload([
-        'payId' => 'PID-1', 'orderId' => '999', 'status' => 'OK',
+        'payId'  => 'PID-1', 'orderId' => '999', 'status' => 'OK',
         'amount' => '12.50', 'currency' => 'MDL',
     ]);
 
@@ -65,7 +65,7 @@ it('persists the payment when store_payments is enabled', function () {
         ->amount->toBe(12.5);
 });
 
-it('does not persist when store_payments is disabled', function () {
+it('does not persist when store_payments is disabled', function (): void {
     config()->set('maib.store_payments', false);
 
     $this->postJson(route('maib.callback'), signedPayload(['payId' => 'PID-2', 'status' => 'OK']))->assertOk();

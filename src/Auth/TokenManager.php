@@ -47,7 +47,7 @@ class TokenManager
         }
 
         return $this->store($this->request([
-            'projectId' => $this->projectId,
+            'projectId'     => $this->projectId,
             'projectSecret' => $this->projectSecret,
         ]));
     }
@@ -81,9 +81,9 @@ class TokenManager
         $now = now()->getTimestamp();
 
         $state = [
-            'accessToken' => $token->accessToken,
-            'accessExpiresAt' => $now + $token->expiresIn,
-            'refreshToken' => $token->refreshToken,
+            'accessToken'      => $token->accessToken,
+            'accessExpiresAt'  => $now + $token->expiresIn,
+            'refreshToken'     => $token->refreshToken,
             'refreshExpiresAt' => $now + ($token->refreshExpiresIn ?? 0),
         ];
 

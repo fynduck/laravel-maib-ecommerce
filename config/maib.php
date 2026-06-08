@@ -13,9 +13,9 @@ return [
     |
     */
 
-    'project_id' => env('MAIB_PROJECT_ID'),
+    'project_id'     => env('MAIB_PROJECT_ID'),
     'project_secret' => env('MAIB_PROJECT_SECRET'),
-    'signature_key' => env('MAIB_SIGNATURE_KEY'),
+    'signature_key'  => env('MAIB_SIGNATURE_KEY'),
 
     /*
     |--------------------------------------------------------------------------
@@ -24,7 +24,7 @@ return [
     */
 
     'base_url' => env('MAIB_BASE_URL', 'https://api.maibmerchants.md/v1/'),
-    'timeout' => (int) env('MAIB_TIMEOUT', 30),
+    'timeout'  => (int) env('MAIB_TIMEOUT', 30),
 
     /*
     |--------------------------------------------------------------------------
@@ -38,9 +38,9 @@ return [
     */
 
     'token' => [
-        'cache_store' => env('MAIB_CACHE_STORE'),
+        'cache_store'  => env('MAIB_CACHE_STORE'),
         'cache_prefix' => 'maib_token',
-        'ttl_leeway' => 30,
+        'ttl_leeway'   => 30,
     ],
 
     /*
@@ -55,9 +55,9 @@ return [
     */
 
     'callback' => [
-        'enabled' => true,
-        'route' => env('MAIB_CALLBACK_ROUTE', '/maib/callback'),
-        'name' => 'maib.callback',
+        'enabled'    => true,
+        'route'      => env('MAIB_CALLBACK_ROUTE', '/maib/callback'),
+        'name'       => 'maib.callback',
         'middleware' => ['api'],
     ],
 

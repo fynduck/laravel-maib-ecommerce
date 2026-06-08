@@ -13,15 +13,15 @@ class MaibServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/maib.php', 'maib');
+        $this->mergeConfigFrom(__DIR__ . '/../config/maib.php', 'maib');
 
-        $this->app->singleton(Gateway::class, function (Application $app): Gateway {
+        $this->app->singleton(Gateway::class, static function (Application $app): Gateway {
             $config = $app['config']['maib'];
 
             return new Gateway($config['base_url'], (int) $config['timeout']);
         });
 
-        $this->app->singleton(TokenManager::class, function (Application $app): TokenManager {
+        $this->app->singleton(TokenManager::class, static function (Application $app): TokenManager {
             $config = $app['config']['maib'];
 
             return new TokenManager(
@@ -34,24 +34,22 @@ class MaibServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->singleton(MaibClientContract::class, function (Application $app): MaibClient {
-            return new MaibClient($app->make(Gateway::class), $app->make(TokenManager::class));
-        });
+        $this->app->singleton(MaibClientContract::class, static fn (Application $app): MaibClient => new MaibClient($app->make(Gateway::class), $app->make(TokenManager::class)));
 
         $this->app->alias(MaibClientContract::class, 'maib');
     }
 
     public function boot(): void
     {
-        $this->loadRoutesFrom(__DIR__.'/../routes/maib.php');
+        $this->loadRoutesFrom(__DIR__ . '/../routes/maib.php');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/maib.php' => $this->app->configPath('maib.php'),
+                __DIR__ . '/../config/maib.php' => $this->app->configPath('maib.php'),
             ], 'maib-config');
 
             $this->publishes([
-                __DIR__.'/../database/migrations' => $this->app->databasePath('migrations'),
+                __DIR__ . '/../database/migrations' => $this->app->databasePath('migrations'),
             ], 'maib-migrations');
         }
     }

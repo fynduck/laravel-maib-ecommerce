@@ -4,11 +4,10 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     public function up(): void
     {
-        Schema::create('maib_payments', function (Blueprint $table) {
+        Schema::create('maib_payments', static function (Blueprint $table): void {
             $table->id();
             $table->string('pay_id')->unique();
             $table->string('order_id')->nullable()->index();

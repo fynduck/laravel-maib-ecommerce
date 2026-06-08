@@ -30,10 +30,10 @@ class MaibPayment extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'status' => PaymentStatus::class,
+        'status'   => PaymentStatus::class,
         'currency' => Currency::class,
-        'amount' => 'float',
-        'raw' => 'array',
+        'amount'   => 'float',
+        'raw'      => 'array',
     ];
 
     public static function updateFromCallback(CallbackResult $callback): ?self
@@ -47,16 +47,16 @@ class MaibPayment extends Model
         return static::query()->updateOrCreate(
             ['pay_id' => $payment->payId],
             [
-                'order_id' => $payment->orderId,
-                'biller_id' => $payment->billerId,
-                'status' => $payment->statusEnum(),
+                'order_id'       => $payment->orderId,
+                'biller_id'      => $payment->billerId,
+                'status'         => $payment->statusEnum(),
                 'status_message' => $payment->statusMessage,
-                'amount' => $payment->amount,
-                'currency' => $payment->currencyEnum(),
-                'card_number' => $payment->cardNumber,
-                'rrn' => $payment->rrn,
-                'approval' => $payment->approval,
-                'raw' => $payment->toArray(),
+                'amount'         => $payment->amount,
+                'currency'       => $payment->currencyEnum(),
+                'card_number'    => $payment->cardNumber,
+                'rrn'            => $payment->rrn,
+                'approval'       => $payment->approval,
+                'raw'            => $payment->toArray(),
             ],
         );
     }
