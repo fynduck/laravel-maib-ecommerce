@@ -3,6 +3,7 @@
     "description": "Laravel package for the maib (Moldova Agroindbank) e-Commerce payment gateway.",
     "keywords": ["laravel", "maib", "maibmerchants", "payment", "ecommerce", "moldova"],
     "homepage": "https://github.com/fynduck/laravel-maib-ecommerce",
+    "version": "1.0.0",
     "license": "MIT",
     "authors": [
         {
