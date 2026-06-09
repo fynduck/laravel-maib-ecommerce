@@ -5,9 +5,6 @@ payment gateway. It implements the [maibmerchants e-Commerce API](https://docs.m
 natively in Laravel — HTTP client, container bindings, a facade, config, events, signature
 verification and an optional payments table.
 
-> This package does **not** depend on `maib-ecomm/maib-sdk-php`. It re-implements the same
-> API contract idiomatically for Laravel.
-
 ## Requirements
 
 - PHP 8.2+
