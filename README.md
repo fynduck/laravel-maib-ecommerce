@@ -2,7 +2,7 @@
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/fynduck/laravel-maib-ecommerce.svg?style=flat-square)](https://packagist.org/packages/laravel-maib-ecommerce)
-![Tests](https://github.com/fynduck/laravel-maib-ecommerce/actions/workflows/FileUpload.yml/badge.svg)
+[![Tests](https://github.com/fynduck/laravel-maib-ecommerce/actions/workflows/tests.yml/badge.svg)](https://github.com/fynduck/laravel-maib-ecommerce/actions/workflows/tests.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/fynduck/laravel-maib-ecommerce.svg?style=flat-square)](https://packagist.org/packages/laravel-maib-ecommerce)
 
 A Laravel package for the [maib](https://www.maib.md/) (Moldova Agroindbank) e-Commerce
