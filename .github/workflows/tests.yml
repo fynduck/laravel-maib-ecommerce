@@ -9,14 +9,14 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
-    # Laravel 10 is supported (composer "^10.0") but not CI-tested: it is EOL and
-    # all 10.x releases are now blocked by Composer's security advisory policy.
     strategy:
       fail-fast: false
       matrix:
         php: ['8.2', '8.3', '8.4']
-        laravel: ['11.*', '12.*', '13.*']
+        laravel: ['10.*', '11.*', '12.*', '13.*']
         include:
+          - laravel: '10.*'
+            testbench: '8.*'
           - laravel: '11.*'
             testbench: '9.*'
           - laravel: '12.*'
@@ -27,6 +27,9 @@ jobs:
           # Laravel 13 requires PHP 8.3+
           - laravel: '13.*'
             php: '8.2'
+          # Laravel 10 does not officially support PHP 8.4
+          - laravel: '10.*'
+            php: '8.4'
 
     name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }}
 
@@ -43,6 +46,10 @@ jobs:
 
       - name: Install dependencies
         run: |
+          # Laravel 10 & 11 are EOL, so their releases are flagged by Composer's
+          # security-advisory policy. This is a compatibility test matrix (not a
+          # deploy), so we disable the block to keep testing the supported range.
+          composer config policy.advisories.block false
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update --dev
           composer update --prefer-dist --no-interaction --no-progress
 
