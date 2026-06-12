@@ -1,6 +1,8 @@
 <?php
 
 use Fynduck\MaibEcommerce\Data\PaymentResult;
+use Fynduck\MaibEcommerce\Enums\Currency;
+use Fynduck\MaibEcommerce\Enums\Language;
 use Fynduck\MaibEcommerce\Exceptions\PaymentException;
 use Fynduck\MaibEcommerce\Facades\Maib;
 use Illuminate\Support\Facades\Http;
@@ -44,6 +46,19 @@ describe('with a faked gateway', function () use ($uuid): void {
     it('sends a hold', function (): void {
         Maib::hold(['amount' => 10.25, 'currency' => 'EUR', 'clientIp' => '1.2.3.4']);
         assertSentTo('hold', 'POST');
+    });
+
+    it('accepts Currency and Language enums and sends their scalar values', function (): void {
+        Maib::pay([
+            'amount'   => 10.25,
+            'currency' => Currency::MDL,
+            'clientIp' => '1.2.3.4',
+            'language' => Language::EN,
+        ]);
+
+        Http::assertSent(fn ($request) => str_ends_with(parse_url($request->url(), PHP_URL_PATH), '/v1/pay')
+            && $request->data()['currency'] === 'MDL'
+            && $request->data()['language'] === 'en');
     });
 
     it('completes a hold', function (): void {

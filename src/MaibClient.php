@@ -125,11 +125,31 @@ class MaibClient implements MaibClientContract
      */
     protected function postPayment(string $endpoint, array $data, array $required): PaymentResult
     {
+        $data = $this->normalize($data);
+
         Validator::requireKeys($data, $required);
         Validator::validateParams($data);
 
         return PaymentResult::fromResult(
             $this->gateway->post($endpoint, $data, $this->tokens->accessToken())
         );
+    }
+
+    /**
+     * Convert any backed enum values (e.g. Currency::MDL, Language::EN) to their
+     * scalar value, so callers can pass enums for type safety against mistyping.
+     *
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
+     */
+    protected function normalize(array $data): array
+    {
+        foreach ($data as $key => $value) {
+            if ($value instanceof \BackedEnum) {
+                $data[$key] = $value->value;
+            }
+        }
+
+        return $data;
     }
 }
