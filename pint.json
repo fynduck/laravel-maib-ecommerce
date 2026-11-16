@@ -6,9 +6,6 @@
         "=>": "align_single_space_minimal"
       }
     },
-    "braces": {
-      "allow_single_line_anonymous_class_with_empty_body": true
-    },
     "class_definition": {
       "inline_constructor_arguments": false,
       "space_before_parenthesis": true
@@ -20,10 +17,11 @@
     "constant_case": {
       "case": "lower"
     },
-    "curly_braces_position": {
+    "braces_position": {
       "classes_opening_brace": "next_line_unless_newline_at_signature_end",
       "anonymous_classes_opening_brace": "same_line",
-      "anonymous_functions_opening_brace": "same_line"
+      "anonymous_functions_opening_brace": "same_line",
+      "allow_single_line_empty_anonymous_classes": true
     },
     "declare_equal_normalize": {
       "space": "none"
@@ -44,7 +42,7 @@
       "keep_multiple_spaces_after_comma": false,
       "on_multiline": "ensure_fully_multiline"
     },
-    "new_with_braces": {
+    "new_with_parentheses": {
       "anonymous_class": true,
       "named_class": true
     },
